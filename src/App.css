@@ -1,0 +1,229 @@
+.App {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-header {
+  position: fixed;
+  top: 10px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width : 90%;
+}
+
+.div-logo {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  text-decoration: none;
+  color:white;
+}
+
+.App-logo {
+  height: 10vmin;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.ListNav {
+  list-style: none;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  background: #454857;
+	border-radius: 5px;
+	box-shadow: inset 0 0 0 3px rgba(35, 33, 45, 0.3),
+		0 0 0 3px rgba(185, 185, 185, 0.3);
+}
+
+.activeLink {
+  padding: 5px;
+  margin: 0px 2px;
+  border-radius: 5px;
+  color: #fff;
+  background: purple;
+}
+
+.LinkNav {
+  border-radius: 10px;
+}
+
+.linkNav:link {
+  text-decoration: none;
+  color: white;
+}
+
+.Container {
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  color: White;
+}
+
+.Form {
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.DoubleInputForm {
+  display:flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.DoubleFormItem {
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.radio-form {
+	background: #454857;
+	padding: 4px 1px;
+	border-radius: 3px;
+	box-shadow: inset 0 0 0 3px rgba(35, 33, 45, 0.3),
+		0 0 0 3px rgba(185, 185, 185, 0.3);
+	position: relative;
+}
+
+.radio-form input {
+	display: none;
+}
+
+.radio-form label {
+  width: auto;
+	height: 100%;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+	outline: none;
+	cursor: pointer;
+	border-radius: 2px;
+	padding: 4px 8px;
+	background: #454857;
+	color: #bdbdbdbd;
+	font-size: 14px;
+	font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+		"Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji",
+		"Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+	transition: all 100ms linear;
+}
+
+.radio-form input:checked + label {
+	background-color: purple;
+	color: #fff;
+	box-shadow: 0 1px 1px #0000002e;
+	text-shadow: 0 1px 0px #79485f7a;
+}
+
+.radio-form input:before {
+	content: attr(label);
+	display: inline-block;
+	text-align: center;
+	width: 100%;
+}
+
+.Form-Question {
+  margin-top: 20px;
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+}
+
+.Form-label-question {
+  display : none;
+}
+
+.Form-input-question {
+  margin : 10px 10px;
+  text-align: center;
+  width : 500px;
+  height : 60px;
+  border-radius: 40px;
+  border : none;
+  line-height: 25px;
+  font-size: 25px;
+  background-image: url("");
+    background-position: 10px 10px;
+    background-repeat: no-repeat;
+  background-color: white;
+}
+
+.iconSearch {
+  color : #282c34;
+  position : fixed;
+  left : 925px;
+  height : 25px;
+  width : 25px;
+}
+
+.Form-astral {
+  margin-top : 5px;
+  padding: 10px;
+  background-color: #DFDFDF;
+  color : black;
+  width : 50%;
+  border: 1px solid black;
+  border-radius: 5px;
+}
+
+.Form-input-astral {
+  width : 90%;
+}
+
+.Button-submit-div {
+  margin : 20px;
+  text-align: center !important;
+}
+
+.Button {
+  background-color: light-grey;
+  padding : 5px 10px;
+  border : 1px purple solid;
+  border-radius: 5px;
+  color: purple;
+  font-weight: 900;
+  text-align: center;
+}
+
+.Reponse-paragraphs {
+  font-size: 15px;
+  width : 50%;
+
+}
+
+h2 {
+  text-align: center;
+}
+
+/*@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}*/
