@@ -8,7 +8,7 @@ import "./App.css";
 
 const Header = () => {
   return (
-    <header className="App-header">
+    <div className="App-header">
         <NavLink className="div-logo" to="/">
           <img src={Logo} className="App-logo" alt="logo" />
           <h1>Voiance</h1>
@@ -44,7 +44,7 @@ const Header = () => {
             </NavLink>
         </div>
       </nav>
-    </header>
+    </div>
   );
 };
 

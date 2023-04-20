@@ -7,6 +7,10 @@ const CompatibilityTab = () => {
   const [person2, setPerson2] = useState({ name: '', dob: '', pob: '', tob: '' });
   const [compatibilityType, setCompatibilityType] = useState('amoureuse');
   const [answer, setAnswer] = useState({ paragraphs: [], listItems: [] });
+  const [tarotCheck, setTarotCheck] = useState(false);
+  const [mbtiCheck, setMbtiCheck] = useState(false);
+  const [mbtiProfile1, setMbtiProfile1] = useState("");
+  const [mbtiProfile2, setMbtiProfile2] = useState("");
 
   const handlePersonChange = (e, person) => {
     const { name, value } = e.target;
@@ -17,27 +21,70 @@ const CompatibilityTab = () => {
     setCompatibilityType(e.target.value);
   };
 
-  const createPrompt = (person1, person2, compatibilityType) => {
-    return `Bonjour chatGPT, tu es astrologue, tu as été engagé par un client pour calculer sa compatibilité ${compatibilityType} avec une autre personne.
-            Voici les informations sur ton client :
-            Prénom: ${person1.name}
-            Date de naissance: ${person1.dob}
-            Heure de naissance: ${person1.tob}
-            Lieu de naissance: ${person1.pob}
+  const handleTarotCheckChange = (e) => {
+    setTarotCheck(e.target.checked);
+  };
 
-            Voici les informations sur la deuxieme personne :
-            Prénom: ${person2.name}
-            Date de naissance: ${person2.dob}
-            Heure de naissance: ${person2.tob}
-            Lieu de naissance: ${person2.pob}
+  const handleMbtiCheckChange = (e) => {
+    setMbtiCheck(e.target.checked);
+  };
 
-            Pour commencer, peux-tu tirer 13 cartes de tarot de marseilles au hasard et les indiquer dans ta réponse sous forme de liste ? Tu dois impérativement commencer ta réponse comme suit : 'Voici 13 cartes de tarot de Marseilles tirées au hasard :'.
+  const handleMbtiProfile1Change = (e) => {
+    setMbtiProfile1(e.target.value);
+  };
 
-            En suite, en t'aidant de l'analyse de leur thème astrale, de leur horoscope pour l'année 2023, et de l'analyse des cartes de tarot tirées peux-tu répondre à la question suivante : Est-ce que ${person1.name} et ${person2.name} ont une bonne compatibilité ${compatibilityType} ?
+  const handleMbtiProfile2Change = (e) => {
+    setMbtiProfile2(e.target.value);
+  };
 
-            J'aimerais que tu réponde précisément et que tu donnes des exemples dans ta réponse. Finis chaque paragraphe par un conseil personnalisés, évite les phrases trop généralistes. Aussi dans l'astrologie les gens sont plus sensibles aux conseils qui portent sur leurs relations et l'humain que sur le matériel. Conclu ta réponse avec une réponse par "oui" ou par "non" pour savoir si ces deux personnes sont compatibles.
-            Enlève les formules d'incertitudes, nous savons que le tarot est inexacte, pas besoin de le rappeler. Romance un peu ta réponse. Réponds en moins de 1024 caractères et fait des paragraphes courts.
-            `;
+  let mbtiPromptInstruction1 = "";
+  let mbtipromptAnalysis ="";
+  let mbtiPromptInstruction2 = "";
+
+  if (mbtiCheck) {
+    mbtiPromptInstruction1 = `Profil MBTI: ${mbtiProfile1}`;
+    mbtipromptAnalysis = `- Leur profils MBTI`
+    mbtiPromptInstruction2 = `Profil MBTI: ${mbtiProfile2}`;
+  }
+
+  let tarotPromptInstruction = "";
+  let tarotPromptAnalysis =""
+  if (tarotCheck) {
+    tarotPromptInstruction = `
+    Pour commencer, peux-tu tirer 13 cartes de tarot de marseilles au hasard et les indiquer dans ta réponse sous forme de liste ? Tu dois impérativement commencer la réponsee comme suit : 'Voici 13 cartes de tarot de Marseilles tirées au hasard :'.
+    `;
+    tarotPromptAnalysis = `- L'analyse des cartes de tarots tirées`
+  }
+
+  const createPrompt = (person1, person2, compatibilityType, tarotCheck) => {
+      return `Bonjour chatGPT, tu es astrologue, tu as été engagé par un client pour calculer sa compatibilité ${compatibilityType} avec une autre personne.
+              Voici les informations sur ton client :
+              Prénom: ${person1.name}
+              Date de naissance: ${person1.dob}
+              Heure de naissance: ${person1.tob}
+              Lieu de naissance: ${person1.pob}
+              ${mbtiProfile1}
+
+              Voici les informations sur la deuxieme personne :
+              Prénom: ${person2.name}
+              Date de naissance: ${person2.dob}
+              Heure de naissance: ${person2.tob}
+              Lieu de naissance: ${person2.pob}
+              ${mbtiProfile2}
+
+              ${tarotPromptInstruction}
+
+              En t'aidant de l'analyse des éléments suivants peux-tu répondre à la question suivante : Est-ce que ${person1.name} et ${person2.name} ont une bonne compatibilité ${compatibilityType} ?
+              - Leur thèmes astrales,
+              - Leur horoscopes pour l'année 2023
+              ${tarotPromptAnalysis}
+              ${mbtipromptAnalysis}
+
+              J'aimerais que tu réponde précisément et que tu donnes des exemples dans ta réponse. Finis chaque paragraphe par un conseil personnalisés, évite les phrases trop généralistes. Aussi dans l'astrologie les gens sont plus sensibles aux conseils qui portent sur leurs relations et l'humain que sur le matériel. Conclu ta réponse avec une réponse par "oui" ou par "non" pour savoir si ces deux personnes sont compatibles.
+              Enlève les formules d'incertitudes, nous savons que l'astrologie est inexacte, pas besoin de le rappeler. Romance un peu ta réponse. Réponds en moins de 1024 caractères et fait des paragraphes courts.
+              `;
+
+              console.log(prompt)
   };
 
 const handleSubmit = async (e) => {
@@ -197,6 +244,86 @@ const handleSubmit = async (e) => {
     </div>
     </div>
 
+    <div className="Form-Option">
+      <label className="Form-label-astral">
+      <input
+        className="Form-checkbox-astral"
+        type="checkbox"
+        checked={tarotCheck}
+        onChange={handleTarotCheckChange}
+      />
+      Cartes de tarot
+      </label>
+    </div>
+    <div className="Select-Mbti-Double">
+        <label>
+          <input
+            type="checkbox"
+            checked={mbtiCheck}
+            onChange={handleMbtiCheckChange}
+          />
+          Profil MBTI
+        </label>
+        {mbtiCheck && (
+          <label>
+            Profil MBTI Personne 1
+          <select
+            className="Select-Mbti"
+            value={mbtiProfile1}
+            onChange={handleMbtiProfile1Change}
+            required={mbtiCheck}
+          >
+            <option value="">Choisissez un profil MBTI</option>
+            <option value="ISTJ">ISTJ</option>
+            <option value="ESTJ">ESTJ</option>
+            <option value="ISTP">ISTP</option>
+            <option value="ESTP">ESTP</option>
+            <option value="ISFJ">ISFJ</option>
+            <option value="ESFJ">ESFJ</option>
+            <option value="ISFP">ISFP</option>
+            <option value="ESFP">ESFP</option>
+            <option value="INFJ">INFJ</option>
+            <option value="ENFJ">ENFJ</option>
+            <option value="INFP">INFP</option>
+            <option value="ENFP">ENFP</option>
+            <option value="INTP">INTP</option>
+            <option value="ENTP">ENTP</option>
+            <option value="INTJ">INTJ</option>
+            <option value="ENTJ">ENTJ</option>
+          </select>
+          </label>
+        )}
+        {mbtiCheck && (
+          <label>
+            Profil MBTI Personne 2
+          <select
+            className="Select-Mbti"
+            value={mbtiProfile2}
+            onChange={handleMbtiProfile2Change}
+            required={mbtiCheck}
+          >
+            <option value="">Choisissez un profil MBTI</option>
+            <option value="ISTJ">ISTJ</option>
+            <option value="ESTJ">ESTJ</option>
+            <option value="ISTP">ISTP</option>
+            <option value="ESTP">ESTP</option>
+            <option value="ISFJ">ISFJ</option>
+            <option value="ESFJ">ESFJ</option>
+            <option value="ISFP">ISFP</option>
+            <option value="ESFP">ESFP</option>
+            <option value="INFJ">INFJ</option>
+            <option value="ENFJ">ENFJ</option>
+            <option value="INFP">INFP</option>
+            <option value="ENFP">ENFP</option>
+            <option value="INTP">INTP</option>
+            <option value="ENTP">ENTP</option>
+            <option value="INTJ">INTJ</option>
+            <option value="ENTJ">ENTJ</option>
+          </select>
+        </label>
+        )}
+      </div>
+
     {/* Submit button */}
     <div className="Button-submit-div">
       <button className="Button" onClick={handleSubmit}>
@@ -209,13 +336,17 @@ const handleSubmit = async (e) => {
       {answer.paragraphs.length > 0 && (
         <div>
           <h2>Réponse :</h2>
-          <p>Voici 13 cartes de tarot de Marseilles tirés au hasard :</p>
-          {answer.listItems.length > 0 && (
-            <ul>
-              {answer.listItems.map((item, index) => (
-                <li key={index}>{item}</li>
-              ))}
-            </ul>
+          {tarotCheck && (
+            <>
+            <p>Voici 13 cartes de tarot de Marseilles tirés au hasard :</p>
+            {answer.listItems.length > 0 && (
+              <ul>
+                {answer.listItems.map((item, index) => (
+                  <li key={index}>{item}</li>
+                ))}
+              </ul>
+            )}
+            </>
           )}
           {answer.paragraphs.map((paragraph, index) => (
             <p key={index}>{paragraph}</p>

@@ -11,29 +11,63 @@ function SimpleQuestion() {
   const [birthDate, setBirthDate] = useState("");
   const [birthTime, setBirthTime] = useState("");
   const [birthPlace, setBirthPlace] = useState("");
+  const [tarotCheck, setTarotCheck] = useState(false);
+  const [mbtiCheck, setMbtiCheck] = useState(false);
+  const [mbtiProfile, setMbtiProfile] = useState("");
 
   const handleChangeQuestion = (e) => {
     setQuestion(e.target.value);
   };
 
+  const handleTarotCheckChange = (e) => {
+    setTarotCheck(e.target.checked);
+  };
+
+  const handleMbtiCheckChange = (e) => {
+    setMbtiCheck(e.target.checked);
+  };
+
+  const handleMbtiProfileChange = (e) => {
+    setMbtiProfile(e.target.value);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const prompt = `
-    Bonjour chatGPT, tu es astrologue, tu as été engagé par un client pour répondre à ses questions sur son avenir. Voici les informations sur ton client :
-    Prénom: ${firstName}
-    Date de naissance: ${birthDate}
-    Heure de naissance: ${birthTime}
-    Lieu de naissance: ${birthPlace}
-    Pour commencer, peux-tu tirer 13 cartes de tarot de marseilles au hasard et les indiquer dans ta réponse sous forme de liste ? Tu dois impérativement commencer la réponsee comme suit : 'Voici 13 cartes de tarot de Marseilles tirées au hasard :'.
+    let mbtiPromptInstruction = "";
+    let mbtipromptAnalysis ="";
+    if (mbtiCheck) {
+      mbtiPromptInstruction = `Profil MBTI: ${mbtiProfile}`;
+      mbtipromptAnalysis = `- Son profil MBTI`
+    }
 
+    let tarotPromptInstruction = "";
+    let tarotPromptAnalysis =""
+    if (tarotCheck) {
+      tarotPromptInstruction = `
+      Pour commencer, peux-tu tirer 13 cartes de tarot de marseilles au hasard et les indiquer dans ta réponse sous forme de liste ? Tu dois impérativement commencer la réponsee comme suit : 'Voici 13 cartes de tarot de Marseilles tirées au hasard :'.
+      `;
+      tarotPromptAnalysis = `- L'analyse des cartes de tarots tirées`
+    }
 
-    En suite, en t'aidant de l'analyse de son thème astrale, de son horoscope pour l'année 2023, et de l'analyse des cartes de tarot tirées peux-tu répondre à la question suivante : ${question}
+    const  prompt = `Bonjour chatGPT, tu es astrologue, tu as été engagé par un client pour répondre à ses questions sur son avenir. Voici les informations sur ton client :
+                    Prénom: ${firstName}
+                    Date de naissance: ${birthDate}
+                    Heure de naissance: ${birthTime}
+                    Lieu de naissance: ${birthPlace}
+                    ${mbtiPromptInstruction}
 
+                    ${tarotPromptInstruction}
 
-    J'aimerais que tu réponde précisément et que tu donnes des exemples dans ta réponse. Finis chaque paragraphe par un conseil personnalisés, évite les phrases trop généralistes. Aussi dans l'astrologie les gens sont plus sensibles aux conseils qui portent sur leurs relations et l'humain que sur le matériel.
-    Enlève les formules d'incertitude, nous savons que le tarot est inexacte, pas besoin de le rappeler. Romance un peu ta réponse. Réponds en moins de 512 caractères et fait des paragraphes courts.
-    `;
+                    En t'aidant de l'analyse des éléments suivants peux-tu répondre à la question suivante : ${question}
+                    - Son thème astrale,
+                    - Son horoscope pour l'année 2023
+                    ${tarotPromptAnalysis}
+                    ${mbtipromptAnalysis}
+
+                    J'aimerais que tu réponde précisément et que tu donnes des exemples dans ta réponse. Finis chaque paragraphe par un conseil personnalisés, évite les phrases trop généralistes. Aussi dans l'astrologie les gens sont plus sensibles aux conseils qui portent sur leurs relations et l'humain que sur le matériel.
+                    Enlève les formules d'incertitude, nous savons que le tarot est inexacte, pas besoin de le rappeler. Romance un peu ta réponse. Réponds en moins de 512 caractères et fait des paragraphes courts.
+                    `;
 
     try {
       const result = await axios.post(
@@ -125,6 +159,57 @@ function SimpleQuestion() {
                 required
               />
             </div>
+
+          </div>
+        </div>
+
+      <div className="Form-Option">
+        <div>
+          <label className="Form-label-astral">
+          <input
+            className="Form-checkbox-astral"
+            type="checkbox"
+            checked={tarotCheck}
+            onChange={handleTarotCheckChange}
+          />
+          Cartes de tarot
+          </label>
+        </div>
+        <div>
+            <label>
+              <input
+                type="checkbox"
+                checked={mbtiCheck}
+                onChange={handleMbtiCheckChange}
+              />
+              Profil MBTI
+            </label>
+            {mbtiCheck && (
+              <select
+                className="Select-Mbti"
+                value={mbtiProfile}
+                onChange={handleMbtiProfileChange}
+                required={mbtiCheck}
+              >
+                <option value="">Choisissez un profil MBTI</option>
+                <option value="ISTJ">ISTJ</option>
+                <option value="ESTJ">ESTJ</option>
+                <option value="ISTP">ISTP</option>
+                <option value="ESTP">ESTP</option>
+                <option value="ISFJ">ISFJ</option>
+                <option value="ESFJ">ESFJ</option>
+                <option value="ISFP">ISFP</option>
+                <option value="ESFP">ESFP</option>
+                <option value="INFJ">INFJ</option>
+                <option value="ENFJ">ENFJ</option>
+                <option value="INFP">INFP</option>
+                <option value="ENFP">ENFP</option>
+                <option value="INTP">INTP</option>
+                <option value="ENTP">ENTP</option>
+                <option value="INTJ">INTJ</option>
+                <option value="ENTJ">ENTJ</option>
+              </select>
+            )}
           </div>
         </div>
 
@@ -152,13 +237,17 @@ function SimpleQuestion() {
         {answer.paragraphs.length > 0 && (
           <div>
             <h2>Réponse :</h2>
-            <p>Voici 13 cartes de tarot de Marseilles tirés au hasard :</p>
-            {answer.listItems.length > 0 && (
-              <ul>
-                {answer.listItems.map((item, index) => (
-                  <li key={index}>{item}</li>
-                ))}
-              </ul>
+            {tarotCheck && (
+              <>
+              <p>Voici 13 cartes de tarot de Marseilles tirées au hasard :</p>
+              {answer.listItems.length > 0 && (
+                <ul>
+                  {answer.listItems.map((item, index) => (
+                    <li key={index}>{item}</li>
+                  ))}
+                </ul>
+              )}
+              </>
             )}
             {answer.paragraphs.map((paragraph, index) => (
               <p key={index}>{paragraph}</p>
