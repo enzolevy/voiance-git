@@ -6,7 +6,7 @@ import { FaSpinner } from "react-icons/fa";
 const CompatibilityTab = () => {
   const [person1, setPerson1] = useState({ name: '', dob: '', pob: '', tob: '' });
   const [person2, setPerson2] = useState({ name: '', dob: '', pob: '', tob: '' });
-  const [compatibilityType, setCompatibilityType] = useState('');
+  const [compatibilityType, setCompatibilityType] = useState('amoureuse');
   const [answer, setAnswer] = useState({ paragraphs: [], listItems: [] });
   const [tarotCheck, setTarotCheck] = useState(false);
   const [mbtiCheck, setMbtiCheck] = useState(false);
@@ -91,12 +91,6 @@ const CompatibilityTab = () => {
 
 const handleSubmit = async (e) => {
   e.preventDefault();
-
-  if (!e.target.checkValidity()) {
-    alert("Veuillez remplir tous les champs requis.");
-    return;
-  }
-
   setLoading(true); // Afficher le loader
 
   const prompt = createPrompt(person1, person2, compatibilityType);
@@ -322,7 +316,7 @@ const handleSubmit = async (e) => {
           Cartes de tarot
           </label>
         </div>
-        <div className="Select-Mbti-Double">
+        <div className="Select-Mbti">
             <label>
               <input
                 type="checkbox"
@@ -332,10 +326,9 @@ const handleSubmit = async (e) => {
               Profil MBTI
             </label>
             {mbtiCheck && (
-              <label>
+              <label className="Switch-Mbti">
                 Profil MBTI Personne 1
               <select
-                className="Select-Mbti"
                 value={mbtiProfile1}
                 onChange={handleMbtiProfile1Change}
                 required={mbtiCheck}
@@ -361,10 +354,9 @@ const handleSubmit = async (e) => {
               </label>
             )}
             {mbtiCheck && (
-              <label>
+              <label className="Switch-Mbti">
                 Profil MBTI Personne 2
               <select
-                className="Select-Mbti"
                 value={mbtiProfile2}
                 onChange={handleMbtiProfile2Change}
                 required={mbtiCheck}

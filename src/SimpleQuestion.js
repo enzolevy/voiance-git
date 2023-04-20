@@ -180,7 +180,7 @@ function SimpleQuestion() {
           Cartes de tarot
           </label>
         </div>
-        <div>
+        <div className="Select-Mbti">
             <label>
               <input
                 type="checkbox"
@@ -191,7 +191,6 @@ function SimpleQuestion() {
             </label>
             {mbtiCheck && (
               <select
-                className="Select-Mbti"
                 value={mbtiProfile}
                 onChange={handleMbtiProfileChange}
                 required={mbtiCheck}
@@ -219,7 +218,6 @@ function SimpleQuestion() {
         </div>
 
         <div className="Form-Question">
-          <label className="Form-label-question">Question : </label>
           <input
             className="Form-input-question"
             type="text"

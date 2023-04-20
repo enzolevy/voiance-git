@@ -5,6 +5,8 @@ import SimpleQuestion from "./SimpleQuestion";
 import CompatibilityTab from "./CompatibilityTab";
 import Home from './Home';
 import Logo from './logo.svg';
+import { AiFillHome } from 'react-icons/ai';
+import { GiCrystalBall, GiNightSleep, GiLovers } from 'react-icons/gi';
 import "./App.css";
 
 const Header = () => {
@@ -23,6 +25,7 @@ const Header = () => {
                             color: isActive ? '#fff' : '#545e6f',
                             background: isActive ? '#6200ee' : '#f0f0f0',
                             })} to="/">
+              <AiFillHome className="nav-icon" />
               Accueil
             </NavLink>
             <NavLink className="linkNav" style={({ isActive }) => ({
@@ -32,6 +35,7 @@ const Header = () => {
                             color: isActive ? '#fff' : '#545e6f',
                             background: isActive ? '#6200ee' : '#f0f0f0',
                             })} to="/SimpleQuestion">
+              <GiCrystalBall className="nav-icon" />
               Boule de crystale
             </NavLink>
             <NavLink className="linkNav" style={({ isActive }) => ({
@@ -41,6 +45,7 @@ const Header = () => {
                             color: isActive ? '#fff' : '#545e6f',
                             background: isActive ? '#6200ee' : '#f0f0f0',
                             })} to="/CompatibilityTab">
+              <GiLovers className="nav-icon" />
               Compatibilité
             </NavLink>
         </div>
