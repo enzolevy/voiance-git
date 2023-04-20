@@ -1,16 +1,18 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import "./App.css";
+import { FaSpinner } from "react-icons/fa";
 
 const CompatibilityTab = () => {
   const [person1, setPerson1] = useState({ name: '', dob: '', pob: '', tob: '' });
   const [person2, setPerson2] = useState({ name: '', dob: '', pob: '', tob: '' });
-  const [compatibilityType, setCompatibilityType] = useState('amoureuse');
+  const [compatibilityType, setCompatibilityType] = useState('');
   const [answer, setAnswer] = useState({ paragraphs: [], listItems: [] });
   const [tarotCheck, setTarotCheck] = useState(false);
   const [mbtiCheck, setMbtiCheck] = useState(false);
   const [mbtiProfile1, setMbtiProfile1] = useState("");
   const [mbtiProfile2, setMbtiProfile2] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handlePersonChange = (e, person) => {
     const { name, value } = e.target;
@@ -56,7 +58,7 @@ const CompatibilityTab = () => {
     tarotPromptAnalysis = `- L'analyse des cartes de tarots tirées`
   }
 
-  const createPrompt = (person1, person2, compatibilityType, tarotCheck) => {
+  const createPrompt = (person1, person2, compatibilityType) => {
       return `Bonjour chatGPT, tu es astrologue, tu as été engagé par un client pour calculer sa compatibilité ${compatibilityType} avec une autre personne.
               Voici les informations sur ton client :
               Prénom: ${person1.name}
@@ -89,6 +91,13 @@ const CompatibilityTab = () => {
 
 const handleSubmit = async (e) => {
   e.preventDefault();
+
+  if (!e.target.checkValidity()) {
+    alert("Veuillez remplir tous les champs requis.");
+    return;
+  }
+
+  setLoading(true); // Afficher le loader
 
   const prompt = createPrompt(person1, person2, compatibilityType);
 
@@ -131,214 +140,279 @@ const handleSubmit = async (e) => {
       .filter((paragraph, index) => index !== listStartIndex);
 
     setAnswer({ paragraphs, listItems });
+    setLoading(false);
   } catch (error) {
     console.error("Error fetching data from OpenAI API:", error);
     setAnswer("An error occurred. Please try again.");
+    setLoading(false);
   }
 };
 
   return (
     <div className="Container">
-    <div className="Form">
+      <form onSubmit={handleSubmit}>
+        <div className="Form">
+          <div className="DoubleInputForm">
 
-      {/* Radio buttons for compatibility type */}
-      <h3>Type de compatibilité</h3>
-      <div className="radio-form">
+          {/* Inputs for Person 1 */}
+          <div className="DoubleFormItem">
+          <h3>Personne 1</h3>
+          <div className="Form-astral">
+          <div>
+            <label className="Form-label-astral">
+              Prénom :
+              <input
+                className="Form-input-astral"
+                type="text"
+                name="name"
+                value={person1.name}
+                onChange={(e) => handlePersonChange(e, 'person1')}
+                required
+                />
+            </label>
+            </div>
+            <div>
+            <label className="Form-label-astral">
+              Date de naissance :
+              <input
+                className="Form-input-astral"
+                type="date"
+                name="dob"
+                value={person1.dob}
+                onChange={(e) => handlePersonChange(e, 'person1')}
+                required/>
+            </label>
+            </div>
+            <div>
+            <label className="Form-label-astral">
+              Lieu de naissance :
+              <input
+                className="Form-input-astral"
+                type="text"
+                name="pob"
+                value={person1.pob}
+                onChange={(e) => handlePersonChange(e, 'person1')}
+                required
+                />
+            </label>
+            </div>
+            <div>
+            <label className="Form-label-astral">
+              Heure de naissance :
+              <input
+                className="Form-input-astral"
+                type="time"
+                name="tob"
+                value={person1.tob} onChange={(e) => handlePersonChange(e, 'person1')}
+                required/>
+            </label>
+            </div>
+          </div>
+          </div>
 
-        <input
-          type="radio"
-          value="amoureuse"
-          checked={compatibilityType === "amoureuse"}
-          onChange={handleCompatibilityTypeChange}
-          id="amoureuse"
-        />
-        <label for="amoureuse">
-          Amoureuse
-        </label>
+          {/* Inputs for Person 2 */}
+          <div className="DoubleFormItem">
+          <h3>Personne 2</h3>
+          <div className="Form-astral">
+          <div>
+            <label className="Form-label-astral">
+              Prénom :
+              <input
+                className="Form-input-astral"
+                type="text"
+                name="name"
+                value={person2.name}
+                onChange={(e) => handlePersonChange(e, 'person2')}
+                required
+                />
+            </label>
+            </div>
+            <div>
+            <label className="Form-label-astral">
+              Date de naissance :
+              <input
+                className="Form-input-astral"
+                type="date"
+                name="dob"
+                value={person2.dob}
+                onChange={(e) => handlePersonChange(e, 'person2')}
+                required
+                />
+            </label>
+            </div>
+            <div>
+            <label className="Form-label-astral">
+              Lieu de naissance :
+              <input
+                className="Form-input-astral"
+                type="text"
+                name="pob"
+                value={person2.pob}
+                onChange={(e) => handlePersonChange(e, 'person2')}
+                required
+                />
+            </label>
+            </div>
+            <div>
+            <label className="Form-label-astral">
+              Heure de naissance :
+              <input
+                className="Form-input-astral"
+                type="time"
+                name="tob"
+                value={person2.tob}
+                onChange={(e) => handlePersonChange(e, 'person2')}
+                required
+                />
+            </label>
+            </div>
+          </div>
+        </div>
+        </div>
 
-        <input
-          type="radio"
-          value="professionnelle"
-          checked={compatibilityType === "professionnelle"}
-          onChange={handleCompatibilityTypeChange}
-          id="professionnelle"
-        />
-        <label for="professionnelle">
-          Professionnelle
-        </label>
+        {/* Radio buttons for compatibility type */}
+        <h3>Type de compatibilité</h3>
+        <div className="radio-form">
 
-        <input
-          type="radio"
-          value="amicale"
-          checked={compatibilityType === "amicale"}
-          onChange={handleCompatibilityTypeChange}
-          id="amicale"
-        />
-        <label for="amicale">
-          Amicale
-        </label>
-      </div>
-
-      <div className="DoubleInputForm">
-
-      {/* Inputs for Person 1 */}
-      <div className="DoubleFormItem">
-      <h3>Personne 1</h3>
-      <div className="Form-astral">
-      <div>
-        <label className="Form-label-astral">
-          Prénom :
-          <input className="Form-input-astral" type="text" name="name" value={person1.name} onChange={(e) => handlePersonChange(e, 'person1')} required/>
-        </label>
-        </div>
-        <div>
-        <label className="Form-label-astral">
-          Date de naissance :
-          <input className="Form-input-astral" type="date" name="dob" value={person1.dob} onChange={(e) => handlePersonChange(e, 'person1')} required/>
-        </label>
-        </div>
-        <div>
-        <label className="Form-label-astral">
-          Lieu de naissance :
-          <input className="Form-input-astral" type="text" name="pob" value={person1.pob} onChange={(e) => handlePersonChange(e, 'person1')} required/>
-        </label>
-        </div>
-        <div>
-        <label className="Form-label-astral">
-          Heure de naissance :
-          <input className="Form-input-astral" type="time" name="tob" value={person1.tob} onChange={(e) => handlePersonChange(e, 'person1')} required/>
-        </label>
-        </div>
-      </div>
-      </div>
-
-      {/* Inputs for Person 2 */}
-      <div className="DoubleFormItem">
-      <h3>Personne 2</h3>
-      <div className="Form-astral">
-      <div>
-        <label className="Form-label-astral">
-          Prénom :
-          <input className="Form-input-astral" type="text" name="name" value={person2.name} onChange={(e) => handlePersonChange(e, 'person2')} required/>
-        </label>
-        </div>
-        <div>
-        <label className="Form-label-astral">
-          Date de naissance :
-          <input className="Form-input-astral" type="date" name="dob" value={person2.dob} onChange={(e) => handlePersonChange(e, 'person2')} required/>
-        </label>
-        </div>
-        <div>
-        <label className="Form-label-astral">
-          Lieu de naissance :
-          <input className="Form-input-astral" type="text" name="pob" value={person2.pob} onChange={(e) => handlePersonChange(e, 'person2')} required/>
-        </label>
-        </div>
-        <div>
-        <label className="Form-label-astral">
-          Heure de naissance :
-          <input className="Form-input-astral" type="time" name="tob" value={person2.tob} onChange={(e) => handlePersonChange(e, 'person2')} required/>
-        </label>
-        </div>
-      </div>
-    </div>
-    </div>
-
-    <div className="Form-Option">
-      <label className="Form-label-astral">
-      <input
-        className="Form-checkbox-astral"
-        type="checkbox"
-        checked={tarotCheck}
-        onChange={handleTarotCheckChange}
-      />
-      Cartes de tarot
-      </label>
-    </div>
-    <div className="Select-Mbti-Double">
-        <label>
           <input
-            type="checkbox"
-            checked={mbtiCheck}
-            onChange={handleMbtiCheckChange}
+            type="radio"
+            value="amoureuse"
+            checked={compatibilityType === "amoureuse"}
+            onChange={handleCompatibilityTypeChange}
+            id="amoureuse"
+            required
           />
-          Profil MBTI
-        </label>
-        {mbtiCheck && (
-          <label>
-            Profil MBTI Personne 1
-          <select
-            className="Select-Mbti"
-            value={mbtiProfile1}
-            onChange={handleMbtiProfile1Change}
-            required={mbtiCheck}
-          >
-            <option value="">Choisissez un profil MBTI</option>
-            <option value="ISTJ">ISTJ</option>
-            <option value="ESTJ">ESTJ</option>
-            <option value="ISTP">ISTP</option>
-            <option value="ESTP">ESTP</option>
-            <option value="ISFJ">ISFJ</option>
-            <option value="ESFJ">ESFJ</option>
-            <option value="ISFP">ISFP</option>
-            <option value="ESFP">ESFP</option>
-            <option value="INFJ">INFJ</option>
-            <option value="ENFJ">ENFJ</option>
-            <option value="INFP">INFP</option>
-            <option value="ENFP">ENFP</option>
-            <option value="INTP">INTP</option>
-            <option value="ENTP">ENTP</option>
-            <option value="INTJ">INTJ</option>
-            <option value="ENTJ">ENTJ</option>
-          </select>
+          <label for="amoureuse">
+            Amoureuse
           </label>
-        )}
-        {mbtiCheck && (
-          <label>
-            Profil MBTI Personne 2
-          <select
-            className="Select-Mbti"
-            value={mbtiProfile2}
-            onChange={handleMbtiProfile2Change}
-            required={mbtiCheck}
-          >
-            <option value="">Choisissez un profil MBTI</option>
-            <option value="ISTJ">ISTJ</option>
-            <option value="ESTJ">ESTJ</option>
-            <option value="ISTP">ISTP</option>
-            <option value="ESTP">ESTP</option>
-            <option value="ISFJ">ISFJ</option>
-            <option value="ESFJ">ESFJ</option>
-            <option value="ISFP">ISFP</option>
-            <option value="ESFP">ESFP</option>
-            <option value="INFJ">INFJ</option>
-            <option value="ENFJ">ENFJ</option>
-            <option value="INFP">INFP</option>
-            <option value="ENFP">ENFP</option>
-            <option value="INTP">INTP</option>
-            <option value="ENTP">ENTP</option>
-            <option value="INTJ">INTJ</option>
-            <option value="ENTJ">ENTJ</option>
-          </select>
-        </label>
-        )}
-      </div>
 
-    {/* Submit button */}
-    <div className="Button-submit-div">
-      <button className="Button" onClick={handleSubmit}>
-        Calculer la compatibilité
-      </button>
-    </div>
+          <input
+            type="radio"
+            value="professionnelle"
+            checked={compatibilityType === "professionnelle"}
+            onChange={handleCompatibilityTypeChange}
+            id="professionnelle"
+            required
+          />
+          <label for="professionnelle">
+            Professionnelle
+          </label>
+
+          <input
+            type="radio"
+            value="amicale"
+            checked={compatibilityType === "amicale"}
+            onChange={handleCompatibilityTypeChange}
+            id="amicale"
+            required
+          />
+          <label for="amicale">
+            Amicale
+          </label>
+        </div>
+
+        <div className="Form-Option">
+          <label className="Form-label-astral">
+          <input
+            className="Form-checkbox-astral"
+            type="checkbox"
+            checked={tarotCheck}
+            onChange={handleTarotCheckChange}
+          />
+          Cartes de tarot
+          </label>
+        </div>
+        <div className="Select-Mbti-Double">
+            <label>
+              <input
+                type="checkbox"
+                checked={mbtiCheck}
+                onChange={handleMbtiCheckChange}
+              />
+              Profil MBTI
+            </label>
+            {mbtiCheck && (
+              <label>
+                Profil MBTI Personne 1
+              <select
+                className="Select-Mbti"
+                value={mbtiProfile1}
+                onChange={handleMbtiProfile1Change}
+                required={mbtiCheck}
+              >
+                <option value="">Choisissez un profil MBTI</option>
+                <option value="ISTJ">ISTJ</option>
+                <option value="ESTJ">ESTJ</option>
+                <option value="ISTP">ISTP</option>
+                <option value="ESTP">ESTP</option>
+                <option value="ISFJ">ISFJ</option>
+                <option value="ESFJ">ESFJ</option>
+                <option value="ISFP">ISFP</option>
+                <option value="ESFP">ESFP</option>
+                <option value="INFJ">INFJ</option>
+                <option value="ENFJ">ENFJ</option>
+                <option value="INFP">INFP</option>
+                <option value="ENFP">ENFP</option>
+                <option value="INTP">INTP</option>
+                <option value="ENTP">ENTP</option>
+                <option value="INTJ">INTJ</option>
+                <option value="ENTJ">ENTJ</option>
+              </select>
+              </label>
+            )}
+            {mbtiCheck && (
+              <label>
+                Profil MBTI Personne 2
+              <select
+                className="Select-Mbti"
+                value={mbtiProfile2}
+                onChange={handleMbtiProfile2Change}
+                required={mbtiCheck}
+              >
+                <option value="">Choisissez un profil MBTI</option>
+                <option value="ISTJ">ISTJ</option>
+                <option value="ESTJ">ESTJ</option>
+                <option value="ISTP">ISTP</option>
+                <option value="ESTP">ESTP</option>
+                <option value="ISFJ">ISFJ</option>
+                <option value="ESFJ">ESFJ</option>
+                <option value="ISFP">ISFP</option>
+                <option value="ESFP">ESFP</option>
+                <option value="INFJ">INFJ</option>
+                <option value="ENFJ">ENFJ</option>
+                <option value="INFP">INFP</option>
+                <option value="ENFP">ENFP</option>
+                <option value="INTP">INTP</option>
+                <option value="ENTP">ENTP</option>
+                <option value="INTJ">INTJ</option>
+                <option value="ENTJ">ENTJ</option>
+              </select>
+            </label>
+            )}
+          </div>
+
+        {/* Submit button */}
+        <div className="Button-submit-div">
+          <button className="Button" type="submit">
+            Calculer la compatibilité
+          </button>
+        </div>
+      </div>
+    </form>
 
     {/* Display the response */}
+    {loading ? (
+    <div className="Loader">
+      <FaSpinner className="Spinner" />
+    </div>
+    ) : (
     <div className="Reponse-paragraphs">
       {answer.paragraphs.length > 0 && (
         <div>
           <h2>Réponse :</h2>
           {tarotCheck && (
             <>
-            <p>Voici 13 cartes de tarot de Marseilles tirés au hasard :</p>
+            <p>Voici 13 cartes de tarot de Marseilles tirées au hasard :</p>
             {answer.listItems.length > 0 && (
               <ul>
                 {answer.listItems.map((item, index) => (
@@ -354,7 +428,7 @@ const handleSubmit = async (e) => {
         </div>
       )}
     </div>
-  </div>
+    )}
   </div>
   );
 };

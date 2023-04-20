@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, NavLink, Routes } from "react-router-do
 import React from 'react';
 import SimpleQuestion from "./SimpleQuestion";
 import CompatibilityTab from "./CompatibilityTab";
+import Home from './Home';
 import Logo from './logo.svg';
 import "./App.css";
 
@@ -11,7 +12,7 @@ const Header = () => {
     <div className="App-header">
         <NavLink className="div-logo" to="/">
           <img src={Logo} className="App-logo" alt="logo" />
-          <h1>Voiance</h1>
+          <h1>Destin en ligne</h1>
         </NavLink>
       <nav className="Navigation">
         <div className="ListNav">
@@ -20,7 +21,7 @@ const Header = () => {
                             margin: isActive ? '0px 2px' : '0px 2px',
                             borderRadius : isActive ? '5px' : '5px',
                             color: isActive ? '#fff' : '#545e6f',
-                            background: isActive ? 'purple' : '#f0f0f0',
+                            background: isActive ? '#6200ee' : '#f0f0f0',
                             })} to="/">
               Accueil
             </NavLink>
@@ -29,7 +30,7 @@ const Header = () => {
                             margin: isActive ? '0px 2px' : '0px 2px',
                             borderRadius : isActive ? '5px' : '5px',
                             color: isActive ? '#fff' : '#545e6f',
-                            background: isActive ? 'purple' : '#f0f0f0',
+                            background: isActive ? '#6200ee' : '#f0f0f0',
                             })} to="/SimpleQuestion">
               Boule de crystale
             </NavLink>
@@ -38,7 +39,7 @@ const Header = () => {
                             margin: isActive ? '0px 2px' : '0px 2px',
                             borderRadius : isActive ? '5px' : '5px',
                             color: isActive ? '#fff' : '#545e6f',
-                            background: isActive ? 'purple' : '#f0f0f0',
+                            background: isActive ? '#6200ee' : '#f0f0f0',
                             })} to="/CompatibilityTab">
               Compatibilité
             </NavLink>
@@ -54,6 +55,7 @@ function App() {
       <div className="App">
         <Header />
         <Routes>
+          <Route path="/" element={<Home />} />
           <Route path="/CompatibilityTab" element={<CompatibilityTab />} />
           <Route path="/SimpleQuestion" element={<SimpleQuestion />} />
         </Routes>

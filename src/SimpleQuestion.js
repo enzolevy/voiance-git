@@ -3,6 +3,7 @@ import axios from "axios";
 import "./App.css";
 import { IconContext } from "react-icons";
 import { FaSearch } from "react-icons/fa";
+import { FaSpinner } from "react-icons/fa";
 
 function SimpleQuestion() {
   const [question, setQuestion] = useState("");
@@ -14,6 +15,7 @@ function SimpleQuestion() {
   const [tarotCheck, setTarotCheck] = useState(false);
   const [mbtiCheck, setMbtiCheck] = useState(false);
   const [mbtiProfile, setMbtiProfile] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleChangeQuestion = (e) => {
     setQuestion(e.target.value);
@@ -33,6 +35,7 @@ function SimpleQuestion() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true); // Afficher le loader
 
     let mbtiPromptInstruction = "";
     let mbtipromptAnalysis ="";
@@ -66,7 +69,7 @@ function SimpleQuestion() {
                     ${mbtipromptAnalysis}
 
                     J'aimerais que tu réponde précisément et que tu donnes des exemples dans ta réponse. Finis chaque paragraphe par un conseil personnalisés, évite les phrases trop généralistes. Aussi dans l'astrologie les gens sont plus sensibles aux conseils qui portent sur leurs relations et l'humain que sur le matériel.
-                    Enlève les formules d'incertitude, nous savons que le tarot est inexacte, pas besoin de le rappeler. Romance un peu ta réponse. Réponds en moins de 512 caractères et fait des paragraphes courts.
+                    Enlève les formules d'incertitude, nous savons que le tarot est inexacte, pas besoin de le rappeler. Romance un peu ta réponse. Réponds en moins de 1024 caractères et fait des paragraphes courts.
                     `;
 
     try {
@@ -74,7 +77,7 @@ function SimpleQuestion() {
         `https://api.openai.com/v1/engines/text-davinci-003/completions`,
         {
           prompt,
-          max_tokens: 512,
+          max_tokens: 1024,
           n: 1,
           stop: null,
           temperature: 1,
@@ -108,9 +111,11 @@ function SimpleQuestion() {
         .filter((paragraph, index) => index !== listStartIndex);
 
       setAnswer({ paragraphs, listItems });
+      setLoading(false);
     } catch (error) {
       console.error("Error fetching data from OpenAI API:", error);
       setAnswer("An error occurred. Please try again.");
+      setLoading(false);
     }
   };
 
@@ -233,6 +238,13 @@ function SimpleQuestion() {
           </button>
         </div>
       </form>
+
+      {/* Display the response */}
+      {loading ? (
+      <div className="Loader">
+        <FaSpinner className="Spinner" />
+      </div>
+      ) : (
       <div className="Reponse-paragraphs">
         {answer.paragraphs.length > 0 && (
           <div>
@@ -255,7 +267,9 @@ function SimpleQuestion() {
           </div>
         )}
       </div>
+      )}
     </div>
+
   );
 }
 

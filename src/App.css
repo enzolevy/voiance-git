@@ -7,6 +7,7 @@
   justify-content: initial;
   font-size: calc(10px + 2vmin);
   color: white;
+  margin : 0.5em;
 }
 
 .App-header {
@@ -32,6 +33,10 @@
   margin-right: 10px;
 }
 
+h1 {
+  font-size : 25px;
+}
+
 .ListNav {
   list-style: none;
   display: flex;
@@ -48,7 +53,7 @@
   margin: 0px 2px;
   border-radius: 5px;
   color: #fff;
-  background: purple;
+  background: #6200ee;
 }
 
 .LinkNav {
@@ -124,7 +129,7 @@
 }
 
 .radio-form input:checked + label {
-	background-color: purple;
+	background-color: #6200ee;
 	color: #fff;
 	box-shadow: 0 1px 1px #0000002e;
 	text-shadow: 0 1px 0px #79485f7a;
@@ -214,17 +219,94 @@
 .Button {
   background-color: light-grey;
   padding : 5px 10px;
-  border : 1px purple solid;
+  border : 1px #6200ee solid;
   border-radius: 5px;
-  color: purple;
+  color: #6200ee;
   font-weight: 900;
   text-align: center;
 }
 
 .Reponse-paragraphs {
   font-size: 15px;
-  width : 50%;
+  width : 80%;
+}
 
+.Loader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100px;
+}
+
+.Spinner {
+  font-size: 48px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.home-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin : 0 3em;
+}
+
+.home-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.home-btn {
+  background-color: #6200ee;
+  border: none;
+  color: white;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 15rem;
+  height: 15rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.home-btn:hover {
+  background-color: #3700b3;
+}
+
+.home-btn-disabled {
+  background-color: transparent;
+  border: 2px dashed #ccc;
+  color: #ccc;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 15rem;
+  height: 15rem;
+  border-radius: 8px;
+  cursor: not-allowed;
+}
+
+.home-button-link {
+  text-decoration: none;
+}
+
+.home-icon {
+  font-size: 48px;
+  margin-bottom: 8px;
 }
 
 h2 {
