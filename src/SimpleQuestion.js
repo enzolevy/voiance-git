@@ -228,9 +228,9 @@ function SimpleQuestion() {
             placeholder="Posez votre question ici..."
             required
           />
-          <IconContext.Provider value={{ className: "iconSearch" }}>
-              <FaSearch />
-          </IconContext.Provider>
+            <IconContext.Provider value={{ className: "iconSearch" }}>
+                <FaSearch />
+            </IconContext.Provider>
         </div>
         <div className="Button-submit-div">
           <button className="Button" type="submit">
