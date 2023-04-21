@@ -1,0 +1,390 @@
+.App {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: initial;
+  font-size: calc(10px + 2vmin);
+  color: white;
+  margin : 0.5em;
+}
+
+.App-header {
+  top: 10px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width : 90%;
+}
+
+.div-logo {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  text-decoration: none;
+  color:white;
+}
+
+.App-logo {
+  height: 10vmin;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+h1 {
+  font-size : 25px;
+}
+
+.ListNav {
+  list-style: none;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  background: #454857;
+	border-radius: 5px;
+	box-shadow: inset 0 0 0 3px rgba(35, 33, 45, 0.3),
+		0 0 0 3px rgba(185, 185, 185, 0.3);
+}
+
+.activeLink {
+  padding: 5px;
+  margin: 0px 2px;
+  border-radius: 5px;
+  color: #fff;
+  background: #6200ee;
+}
+
+.LinkNav {
+  border-radius: 10px;
+}
+
+.linkNav:link {
+  text-decoration: none;
+  color: white;
+}
+
+.Container {
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  color: White;
+}
+
+.Form {
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.DoubleInputForm {
+  display:flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.DoubleFormItem {
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.radio-form {
+	background: #454857;
+	padding: 4px 1px;
+	border-radius: 3px;
+	box-shadow: inset 0 0 0 3px rgba(35, 33, 45, 0.3),
+		0 0 0 3px rgba(185, 185, 185, 0.3);
+	position: relative;
+}
+
+.radio-form input {
+	display: none;
+}
+
+.radio-form label {
+  width: auto;
+	height: 100%;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+	outline: none;
+	cursor: pointer;
+	border-radius: 2px;
+	padding: 4px 8px;
+	background: #454857;
+	color: #bdbdbdbd;
+	font-size: 14px;
+	font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+		"Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji",
+		"Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+	transition: all 100ms linear;
+}
+
+.radio-form input:checked + label {
+	background-color: #6200ee;
+	color: #fff;
+	box-shadow: 0 1px 1px #0000002e;
+	text-shadow: 0 1px 0px #79485f7a;
+}
+
+.radio-form input:before {
+	content: attr(label);
+	display: inline-block;
+	text-align: center;
+	width: 100%;
+}
+
+.Form-Option {
+  padding-top : 2em;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.Form-Question {
+  margin-top: 1em;
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+}
+
+.Form-label-question {
+  display : none;
+}
+
+.Form-input-question {
+  margin : 1em;
+  text-align: center;
+  width : 500px;
+  height : 60px;
+  border-radius: 40px;
+  border : none;
+  line-height: 25px;
+  font-size: 25px;
+  background-image: url("");
+    background-position: 10px 10px;
+    background-repeat: no-repeat;
+  background-color: white;
+}
+
+.iconSearch {
+  color : #282c34;
+  position : fixed;
+  left : 925px;
+  height : 25px;
+  width : 25px;
+}
+
+.Form-astral {
+  margin-top : 5px;
+  padding: 10px;
+  background-color: #DFDFDF;
+  color : black;
+  width : 50%;
+  border: 1px solid black;
+  border-radius: 5px;
+}
+
+.Select-Mbti {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.Switch-Mbti {
+  display: flex;
+  flex-direction: row;
+  padding: 0.2em;
+  justify-content: space-between;
+}
+
+.Form-input-astral {
+  width : 90%;
+}
+
+.Button-submit-div {
+  margin : 20px;
+  text-align: center !important;
+}
+
+.Button {
+  background-color: light-grey;
+  padding : 5px 10px;
+  border : 1px #6200ee solid;
+  border-radius: 5px;
+  color: #6200ee;
+  font-weight: 900;
+  text-align: center;
+}
+
+.Reponse-paragraphs {
+  font-size: 15px;
+  width : 80%;
+}
+
+.Loader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100px;
+}
+
+.Spinner {
+  font-size: 48px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.home-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin : 0 3em;
+}
+
+.home-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.home-btn {
+  background-color: #6200ee;
+  border: none;
+  color: white;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 15rem;
+  height: 15rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.home-btn:hover {
+  background-color: #3700b3;
+}
+
+.home-btn-disabled {
+  background-color: transparent;
+  border: 2px dashed #ccc;
+  color: #ccc;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 15rem;
+  height: 15rem;
+  border-radius: 8px;
+  cursor: not-allowed;
+}
+
+.home-button-link {
+  text-decoration: none;
+}
+
+.home-icon {
+  font-size: 48px;
+  margin-bottom: 8px;
+}
+
+h2 {
+  text-align: center;
+}
+
+@media only screen and (max-width: 414px) {
+  .App-header {
+    flex-direction: column;
+  }
+
+  .div-logo {
+    margin-bottom: 10px;
+  }
+
+  .ListNav {
+    font-size: 0.6em;
+  }
+
+  .home-container {
+    margin: 0 1em;
+  }
+
+  .home-buttons {
+    flex-direction: column;
+  }
+
+  .home-btn {
+    width: 15rem;
+    height: 15rem;
+    margin-bottom: 1rem;
+  }
+
+  .Form {
+    margin-top : 2em;
+  }
+
+  .Form-Question {
+    margin-top: 0.5em;
+  }
+
+  .Form-input-question {
+    width: 75%;
+    padding: 0 1.5em;
+  }
+
+  .iconSearch {
+    left: 85%;
+  }
+
+  .Form-astral {
+    width: 75%;
+  }
+
+  .Select-Mbti {
+    padding-top: 1em;
+  }
+
+  .Switch-Mbti {
+    margin: 0.5em 0;
+  }
+}
+
+
+/*@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}*/
