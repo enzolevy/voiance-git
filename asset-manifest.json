@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/voiance-git/static/css/main.19362c82.css",
-    "main.js": "/voiance-git/static/js/main.23fbdff8.js",
+    "main.css": "/voiance-git/static/css/main.caac371b.css",
+    "main.js": "/voiance-git/static/js/main.7102e8e1.js",
     "static/js/787.858507dc.chunk.js": "/voiance-git/static/js/787.858507dc.chunk.js",
     "static/media/logo.svg": "/voiance-git/static/media/logo.448f378d2d23bc686d4c99cfea87240b.svg",
     "index.html": "/voiance-git/index.html",
-    "main.19362c82.css.map": "/voiance-git/static/css/main.19362c82.css.map",
-    "main.23fbdff8.js.map": "/voiance-git/static/js/main.23fbdff8.js.map",
+    "main.caac371b.css.map": "/voiance-git/static/css/main.caac371b.css.map",
+    "main.7102e8e1.js.map": "/voiance-git/static/js/main.7102e8e1.js.map",
     "787.858507dc.chunk.js.map": "/voiance-git/static/js/787.858507dc.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.19362c82.css",
-    "static/js/main.23fbdff8.js"
+    "static/css/main.caac371b.css",
+    "static/js/main.7102e8e1.js"
   ]
 }
